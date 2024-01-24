@@ -18,11 +18,22 @@ class Repository with _$Repository {
 
 @freezed
 class Item with _$Item {
-  const factory Item({
-    required String id,
-    required String node_id,
-    required String name,
-  }) = _Item;
+  const factory Item(
+      {required String id,
+      required String name,
+      required Owner owner,
+      required String language,
+      required int stargazers_count,
+      required int watchers_count,
+      required int forks_count,
+      required int open_issues_count}) = _Item;
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+}
+
+@freezed
+class Owner with _$Owner {
+  const factory Owner({required String avatar_url}) = _Owner;
+
+  factory Owner.fromJson(Map<String, dynamic> json) => _$OwnerFromJson(json);
 }

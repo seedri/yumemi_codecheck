@@ -241,8 +241,13 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Item {
   String get id => throw _privateConstructorUsedError;
-  String get node_id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  Owner get owner => throw _privateConstructorUsedError;
+  String get language => throw _privateConstructorUsedError;
+  int get stargazers_count => throw _privateConstructorUsedError;
+  int get watchers_count => throw _privateConstructorUsedError;
+  int get forks_count => throw _privateConstructorUsedError;
+  int get open_issues_count => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -254,7 +259,17 @@ abstract class $ItemCopyWith<$Res> {
   factory $ItemCopyWith(Item value, $Res Function(Item) then) =
       _$ItemCopyWithImpl<$Res, Item>;
   @useResult
-  $Res call({String id, String node_id, String name});
+  $Res call(
+      {String id,
+      String name,
+      Owner owner,
+      String language,
+      int stargazers_count,
+      int watchers_count,
+      int forks_count,
+      int open_issues_count});
+
+  $OwnerCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -271,23 +286,56 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
   @override
   $Res call({
     Object? id = null,
-    Object? node_id = null,
     Object? name = null,
+    Object? owner = null,
+    Object? language = null,
+    Object? stargazers_count = null,
+    Object? watchers_count = null,
+    Object? forks_count = null,
+    Object? open_issues_count = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      node_id: null == node_id
-          ? _value.node_id
-          : node_id // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      owner: null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as Owner,
+      language: null == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String,
+      stargazers_count: null == stargazers_count
+          ? _value.stargazers_count
+          : stargazers_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      watchers_count: null == watchers_count
+          ? _value.watchers_count
+          : watchers_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      forks_count: null == forks_count
+          ? _value.forks_count
+          : forks_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      open_issues_count: null == open_issues_count
+          ? _value.open_issues_count
+          : open_issues_count // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $OwnerCopyWith<$Res> get owner {
+    return $OwnerCopyWith<$Res>(_value.owner, (value) {
+      return _then(_value.copyWith(owner: value) as $Val);
+    });
   }
 }
 
@@ -298,7 +346,18 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
       __$$ItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String node_id, String name});
+  $Res call(
+      {String id,
+      String name,
+      Owner owner,
+      String language,
+      int stargazers_count,
+      int watchers_count,
+      int forks_count,
+      int open_issues_count});
+
+  @override
+  $OwnerCopyWith<$Res> get owner;
 }
 
 /// @nodoc
@@ -312,22 +371,47 @@ class __$$ItemImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? node_id = null,
     Object? name = null,
+    Object? owner = null,
+    Object? language = null,
+    Object? stargazers_count = null,
+    Object? watchers_count = null,
+    Object? forks_count = null,
+    Object? open_issues_count = null,
   }) {
     return _then(_$ItemImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      node_id: null == node_id
-          ? _value.node_id
-          : node_id // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      owner: null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as Owner,
+      language: null == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String,
+      stargazers_count: null == stargazers_count
+          ? _value.stargazers_count
+          : stargazers_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      watchers_count: null == watchers_count
+          ? _value.watchers_count
+          : watchers_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      forks_count: null == forks_count
+          ? _value.forks_count
+          : forks_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      open_issues_count: null == open_issues_count
+          ? _value.open_issues_count
+          : open_issues_count // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -336,7 +420,14 @@ class __$$ItemImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ItemImpl with DiagnosticableTreeMixin implements _Item {
   const _$ItemImpl(
-      {required this.id, required this.node_id, required this.name});
+      {required this.id,
+      required this.name,
+      required this.owner,
+      required this.language,
+      required this.stargazers_count,
+      required this.watchers_count,
+      required this.forks_count,
+      required this.open_issues_count});
 
   factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemImplFromJson(json);
@@ -344,13 +435,23 @@ class _$ItemImpl with DiagnosticableTreeMixin implements _Item {
   @override
   final String id;
   @override
-  final String node_id;
-  @override
   final String name;
+  @override
+  final Owner owner;
+  @override
+  final String language;
+  @override
+  final int stargazers_count;
+  @override
+  final int watchers_count;
+  @override
+  final int forks_count;
+  @override
+  final int open_issues_count;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(id: $id, node_id: $node_id, name: $name)';
+    return 'Item(id: $id, name: $name, owner: $owner, language: $language, stargazers_count: $stargazers_count, watchers_count: $watchers_count, forks_count: $forks_count, open_issues_count: $open_issues_count)';
   }
 
   @override
@@ -359,8 +460,13 @@ class _$ItemImpl with DiagnosticableTreeMixin implements _Item {
     properties
       ..add(DiagnosticsProperty('type', 'Item'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('node_id', node_id))
-      ..add(DiagnosticsProperty('name', name));
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('owner', owner))
+      ..add(DiagnosticsProperty('language', language))
+      ..add(DiagnosticsProperty('stargazers_count', stargazers_count))
+      ..add(DiagnosticsProperty('watchers_count', watchers_count))
+      ..add(DiagnosticsProperty('forks_count', forks_count))
+      ..add(DiagnosticsProperty('open_issues_count', open_issues_count));
   }
 
   @override
@@ -369,13 +475,24 @@ class _$ItemImpl with DiagnosticableTreeMixin implements _Item {
         (other.runtimeType == runtimeType &&
             other is _$ItemImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.node_id, node_id) || other.node_id == node_id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.owner, owner) || other.owner == owner) &&
+            (identical(other.language, language) ||
+                other.language == language) &&
+            (identical(other.stargazers_count, stargazers_count) ||
+                other.stargazers_count == stargazers_count) &&
+            (identical(other.watchers_count, watchers_count) ||
+                other.watchers_count == watchers_count) &&
+            (identical(other.forks_count, forks_count) ||
+                other.forks_count == forks_count) &&
+            (identical(other.open_issues_count, open_issues_count) ||
+                other.open_issues_count == open_issues_count));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, node_id, name);
+  int get hashCode => Object.hash(runtimeType, id, name, owner, language,
+      stargazers_count, watchers_count, forks_count, open_issues_count);
 
   @JsonKey(ignore: true)
   @override
@@ -394,19 +511,175 @@ class _$ItemImpl with DiagnosticableTreeMixin implements _Item {
 abstract class _Item implements Item {
   const factory _Item(
       {required final String id,
-      required final String node_id,
-      required final String name}) = _$ItemImpl;
+      required final String name,
+      required final Owner owner,
+      required final String language,
+      required final int stargazers_count,
+      required final int watchers_count,
+      required final int forks_count,
+      required final int open_issues_count}) = _$ItemImpl;
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
   @override
   String get id;
   @override
-  String get node_id;
-  @override
   String get name;
+  @override
+  Owner get owner;
+  @override
+  String get language;
+  @override
+  int get stargazers_count;
+  @override
+  int get watchers_count;
+  @override
+  int get forks_count;
+  @override
+  int get open_issues_count;
   @override
   @JsonKey(ignore: true)
   _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Owner _$OwnerFromJson(Map<String, dynamic> json) {
+  return _Owner.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Owner {
+  String get avatar_url => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OwnerCopyWith<Owner> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OwnerCopyWith<$Res> {
+  factory $OwnerCopyWith(Owner value, $Res Function(Owner) then) =
+      _$OwnerCopyWithImpl<$Res, Owner>;
+  @useResult
+  $Res call({String avatar_url});
+}
+
+/// @nodoc
+class _$OwnerCopyWithImpl<$Res, $Val extends Owner>
+    implements $OwnerCopyWith<$Res> {
+  _$OwnerCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? avatar_url = null,
+  }) {
+    return _then(_value.copyWith(
+      avatar_url: null == avatar_url
+          ? _value.avatar_url
+          : avatar_url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OwnerImplCopyWith<$Res> implements $OwnerCopyWith<$Res> {
+  factory _$$OwnerImplCopyWith(
+          _$OwnerImpl value, $Res Function(_$OwnerImpl) then) =
+      __$$OwnerImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String avatar_url});
+}
+
+/// @nodoc
+class __$$OwnerImplCopyWithImpl<$Res>
+    extends _$OwnerCopyWithImpl<$Res, _$OwnerImpl>
+    implements _$$OwnerImplCopyWith<$Res> {
+  __$$OwnerImplCopyWithImpl(
+      _$OwnerImpl _value, $Res Function(_$OwnerImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? avatar_url = null,
+  }) {
+    return _then(_$OwnerImpl(
+      avatar_url: null == avatar_url
+          ? _value.avatar_url
+          : avatar_url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OwnerImpl with DiagnosticableTreeMixin implements _Owner {
+  const _$OwnerImpl({required this.avatar_url});
+
+  factory _$OwnerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OwnerImplFromJson(json);
+
+  @override
+  final String avatar_url;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Owner(avatar_url: $avatar_url)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Owner'))
+      ..add(DiagnosticsProperty('avatar_url', avatar_url));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OwnerImpl &&
+            (identical(other.avatar_url, avatar_url) ||
+                other.avatar_url == avatar_url));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, avatar_url);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OwnerImplCopyWith<_$OwnerImpl> get copyWith =>
+      __$$OwnerImplCopyWithImpl<_$OwnerImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OwnerImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Owner implements Owner {
+  const factory _Owner({required final String avatar_url}) = _$OwnerImpl;
+
+  factory _Owner.fromJson(Map<String, dynamic> json) = _$OwnerImpl.fromJson;
+
+  @override
+  String get avatar_url;
+  @override
+  @JsonKey(ignore: true)
+  _$$OwnerImplCopyWith<_$OwnerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
