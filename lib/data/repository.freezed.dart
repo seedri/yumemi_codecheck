@@ -20,7 +20,6 @@ Repository _$RepositoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Repository {
-  String get title => throw _privateConstructorUsedError;
   int get total_count => throw _privateConstructorUsedError;
   bool get incomplete_results => throw _privateConstructorUsedError;
   List<Item> get items => throw _privateConstructorUsedError;
@@ -37,11 +36,7 @@ abstract class $RepositoryCopyWith<$Res> {
           Repository value, $Res Function(Repository) then) =
       _$RepositoryCopyWithImpl<$Res, Repository>;
   @useResult
-  $Res call(
-      {String title,
-      int total_count,
-      bool incomplete_results,
-      List<Item> items});
+  $Res call({int total_count, bool incomplete_results, List<Item> items});
 }
 
 /// @nodoc
@@ -57,16 +52,11 @@ class _$RepositoryCopyWithImpl<$Res, $Val extends Repository>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
     Object? total_count = null,
     Object? incomplete_results = null,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
       total_count: null == total_count
           ? _value.total_count
           : total_count // ignore: cast_nullable_to_non_nullable
@@ -91,11 +81,7 @@ abstract class _$$RepositoryImplCopyWith<$Res>
       __$$RepositoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String title,
-      int total_count,
-      bool incomplete_results,
-      List<Item> items});
+  $Res call({int total_count, bool incomplete_results, List<Item> items});
 }
 
 /// @nodoc
@@ -109,16 +95,11 @@ class __$$RepositoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
     Object? total_count = null,
     Object? incomplete_results = null,
     Object? items = null,
   }) {
     return _then(_$RepositoryImpl(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
       total_count: null == total_count
           ? _value.total_count
           : total_count // ignore: cast_nullable_to_non_nullable
@@ -139,8 +120,7 @@ class __$$RepositoryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RepositoryImpl with DiagnosticableTreeMixin implements _Repository {
   const _$RepositoryImpl(
-      {required this.title,
-      required this.total_count,
+      {required this.total_count,
       required this.incomplete_results,
       required final List<Item> items})
       : _items = items;
@@ -148,8 +128,6 @@ class _$RepositoryImpl with DiagnosticableTreeMixin implements _Repository {
   factory _$RepositoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$RepositoryImplFromJson(json);
 
-  @override
-  final String title;
   @override
   final int total_count;
   @override
@@ -164,7 +142,7 @@ class _$RepositoryImpl with DiagnosticableTreeMixin implements _Repository {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Repository(title: $title, total_count: $total_count, incomplete_results: $incomplete_results, items: $items)';
+    return 'Repository(total_count: $total_count, incomplete_results: $incomplete_results, items: $items)';
   }
 
   @override
@@ -172,7 +150,6 @@ class _$RepositoryImpl with DiagnosticableTreeMixin implements _Repository {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Repository'))
-      ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('total_count', total_count))
       ..add(DiagnosticsProperty('incomplete_results', incomplete_results))
       ..add(DiagnosticsProperty('items', items));
@@ -183,7 +160,6 @@ class _$RepositoryImpl with DiagnosticableTreeMixin implements _Repository {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RepositoryImpl &&
-            (identical(other.title, title) || other.title == title) &&
             (identical(other.total_count, total_count) ||
                 other.total_count == total_count) &&
             (identical(other.incomplete_results, incomplete_results) ||
@@ -193,8 +169,8 @@ class _$RepositoryImpl with DiagnosticableTreeMixin implements _Repository {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, total_count,
-      incomplete_results, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(runtimeType, total_count, incomplete_results,
+      const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -212,16 +188,13 @@ class _$RepositoryImpl with DiagnosticableTreeMixin implements _Repository {
 
 abstract class _Repository implements Repository {
   const factory _Repository(
-      {required final String title,
-      required final int total_count,
+      {required final int total_count,
       required final bool incomplete_results,
       required final List<Item> items}) = _$RepositoryImpl;
 
   factory _Repository.fromJson(Map<String, dynamic> json) =
       _$RepositoryImpl.fromJson;
 
-  @override
-  String get title;
   @override
   int get total_count;
   @override
@@ -240,10 +213,10 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Item {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   Owner get owner => throw _privateConstructorUsedError;
-  String get language => throw _privateConstructorUsedError;
+  String? get language => throw _privateConstructorUsedError;
   int get stargazers_count => throw _privateConstructorUsedError;
   int get watchers_count => throw _privateConstructorUsedError;
   int get forks_count => throw _privateConstructorUsedError;
@@ -260,10 +233,10 @@ abstract class $ItemCopyWith<$Res> {
       _$ItemCopyWithImpl<$Res, Item>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String name,
       Owner owner,
-      String language,
+      String? language,
       int stargazers_count,
       int watchers_count,
       int forks_count,
@@ -288,7 +261,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
     Object? id = null,
     Object? name = null,
     Object? owner = null,
-    Object? language = null,
+    Object? language = freezed,
     Object? stargazers_count = null,
     Object? watchers_count = null,
     Object? forks_count = null,
@@ -298,7 +271,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -307,10 +280,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as Owner,
-      language: null == language
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       stargazers_count: null == stargazers_count
           ? _value.stargazers_count
           : stargazers_count // ignore: cast_nullable_to_non_nullable
@@ -347,10 +320,10 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String name,
       Owner owner,
-      String language,
+      String? language,
       int stargazers_count,
       int watchers_count,
       int forks_count,
@@ -373,7 +346,7 @@ class __$$ItemImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? owner = null,
-    Object? language = null,
+    Object? language = freezed,
     Object? stargazers_count = null,
     Object? watchers_count = null,
     Object? forks_count = null,
@@ -383,7 +356,7 @@ class __$$ItemImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -392,10 +365,10 @@ class __$$ItemImplCopyWithImpl<$Res>
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as Owner,
-      language: null == language
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       stargazers_count: null == stargazers_count
           ? _value.stargazers_count
           : stargazers_count // ignore: cast_nullable_to_non_nullable
@@ -433,13 +406,13 @@ class _$ItemImpl with DiagnosticableTreeMixin implements _Item {
       _$$ItemImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
   @override
   final Owner owner;
   @override
-  final String language;
+  final String? language;
   @override
   final int stargazers_count;
   @override
@@ -510,10 +483,10 @@ class _$ItemImpl with DiagnosticableTreeMixin implements _Item {
 
 abstract class _Item implements Item {
   const factory _Item(
-      {required final String id,
+      {required final int id,
       required final String name,
       required final Owner owner,
-      required final String language,
+      required final String? language,
       required final int stargazers_count,
       required final int watchers_count,
       required final int forks_count,
@@ -522,13 +495,13 @@ abstract class _Item implements Item {
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override
   Owner get owner;
   @override
-  String get language;
+  String? get language;
   @override
   int get stargazers_count;
   @override

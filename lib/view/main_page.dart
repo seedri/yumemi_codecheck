@@ -35,11 +35,40 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               text = _text;
             }),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   _vm.onPressedSearchButton(text);
+                  debugPrint(
+                      'Data:${_vm.repositoryWithFamily(_vm.searchWord)}');
                 },
                 child: Text('検索')),
-            Text(ref.watch(searchWordProvider))
+            Expanded(
+              child: _vm.repositoryWithFamily(_vm.searchWord).when(
+                    data: (data) => ListView.separated(
+                      itemCount: data.items.length,
+                      itemBuilder: (context, index) => ListTile(
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('debug'),
+                            Text('リポジトリ名：${data.items[index].name ?? "N/A"}'),
+                            Text(
+                                'プロジェクト言語：${data.items[index].language ?? "N/A"}'),
+                            Text(
+                                'Star数：${data.items[index].stargazers_count.toString() ?? "N/A"}'),
+                          ],
+                        ),
+                      ),
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.black,
+                      ),
+                    ),
+                    error: (error, stack) => Text(error.toString()),
+                    loading: () => AspectRatio(
+                      aspectRatio: 1,
+                      child: const CircularProgressIndicator(),
+                    ),
+                  ),
+            ),
           ],
         ),
       ),

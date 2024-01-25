@@ -8,7 +8,6 @@ part of 'repository.dart';
 
 _$RepositoryImpl _$$RepositoryImplFromJson(Map<String, dynamic> json) =>
     _$RepositoryImpl(
-      title: json['title'] as String,
       total_count: json['total_count'] as int,
       incomplete_results: json['incomplete_results'] as bool,
       items: (json['items'] as List<dynamic>)
@@ -18,17 +17,16 @@ _$RepositoryImpl _$$RepositoryImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$RepositoryImplToJson(_$RepositoryImpl instance) =>
     <String, dynamic>{
-      'title': instance.title,
       'total_count': instance.total_count,
       'incomplete_results': instance.incomplete_results,
       'items': instance.items,
     };
 
 _$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
       owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
-      language: json['language'] as String,
+      language: json['language'] as String?,
       stargazers_count: json['stargazers_count'] as int,
       watchers_count: json['watchers_count'] as int,
       forks_count: json['forks_count'] as int,
