@@ -14,6 +14,9 @@ class Repository with _$Repository {
 
   factory Repository.fromJson(Map<String, dynamic> json) =>
       _$RepositoryFromJson(json);
+
+  static const empty = Repository(
+      title: '', total_count: 0, incomplete_results: true, items: []);
 }
 
 @freezed
