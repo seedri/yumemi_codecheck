@@ -37,8 +37,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ElevatedButton(
                 onPressed: () async {
                   _vm.onPressedSearchButton(text);
-                  debugPrint(
-                      'Data:${_vm.repositoryWithFamily(_vm.searchWord)}');
                 },
                 child: Text('検索')),
             _vm.repositoryWithFamily(_vm.searchWord).when(
@@ -59,7 +57,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('debug'),
                             Text('リポジトリ名：${data.items[index].name}'),
                             Text(
                                 'プロジェクト言語：${data.items[index].language ?? "言語情報なし"}'),

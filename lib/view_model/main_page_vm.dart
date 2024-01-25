@@ -28,6 +28,7 @@ class MainPageVM {
   AsyncValue<Repository> repositoryWithFamily(String searchWord) =>
       _ref.watch(apiFamilyProvider(searchWord));
 
+  //検索ボタンを押下した時、searchWordを更新
   void onPressedSearchButton(String searchWord) {
     _ref.read(searchWordProvider.notifier).update((state) => searchWord);
   }

@@ -20,6 +20,7 @@ class Repository with _$Repository {
 
 @freezed
 class Item with _$Item {
+  //仕様よりlanguageのみnullの可能性あり
   const factory Item(
       {required int id,
       required String name,
