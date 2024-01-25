@@ -35,7 +35,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               text = _text;
             }),
             ElevatedButton(
-                onPressed: () async {
+                onPressed: () {
                   _vm.onPressedSearchButton(text);
                 },
                 child: Text('検索')),
