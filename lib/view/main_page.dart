@@ -41,6 +41,16 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       'Data:${_vm.repositoryWithFamily(_vm.searchWord)}');
                 },
                 child: Text('検索')),
+            _vm.repositoryWithFamily(_vm.searchWord).when(
+                  data: (data) {
+                    if (data.total_count == 0) return Text('検索結果なし');
+                    return Text('検索結果${data.total_count.toString()}件');
+                  },
+                  loading: () {
+                    return Text('検索中...');
+                  },
+                  error: (error, stack) => Text(error.toString()),
+                ),
             Expanded(
               child: _vm.repositoryWithFamily(_vm.searchWord).when(
                     data: (data) => ListView.separated(
@@ -50,11 +60,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('debug'),
-                            Text('リポジトリ名：${data.items[index].name ?? "N/A"}'),
+                            Text('リポジトリ名：${data.items[index].name}'),
                             Text(
-                                'プロジェクト言語：${data.items[index].language ?? "N/A"}'),
+                                'プロジェクト言語：${data.items[index].language ?? "言語情報なし"}'),
                             Text(
-                                'Star数：${data.items[index].stargazers_count.toString() ?? "N/A"}'),
+                                'Star数：${data.items[index].stargazers_count.toString()}'),
                           ],
                         ),
                       ),
