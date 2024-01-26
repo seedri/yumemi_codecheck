@@ -51,22 +51,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ),
             Expanded(
               child: _vm.repositoryWithFamily(_vm.searchWord).when(
-                    data: (data) => ListView.separated(
+                    data: (data) => ListView.builder(
                       itemCount: data.items.length,
                       itemBuilder: (context, index) => ListTile(
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('リポジトリ名：${data.items[index].name}'),
-                            Text(
-                                'プロジェクト言語：${data.items[index].language ?? "言語情報なし"}'),
-                            Text(
-                                'Star数：${data.items[index].stargazers_count.toString()}'),
-                          ],
+                        title: GestureDetector(
+                          child: Text('リポジトリ名：${data.items[index].name}'),
+                          onTap: () {},
                         ),
-                      ),
-                      separatorBuilder: (context, index) => Divider(
-                        color: Colors.black,
                       ),
                     ),
                     error: (error, stack) => Text(error.toString()),
