@@ -4,6 +4,15 @@ import 'package:yumemi_codecheck/model/logic.dart';
 
 final searchWordProvider = StateProvider<String>((ref) => '');
 final logicProvider = StateProvider<Logic>((ref) => Logic());
+final selectedRepositoryProvider = StateProvider<Item>((ref) => Item(
+    id: 0,
+    name: "",
+    owner: Owner(avatar_url: ""),
+    language: null,
+    stargazers_count: 0,
+    watchers_count: 0,
+    forks_count: 0,
+    open_issues_count: 0));
 
 AutoDisposeFutureProviderFamily<Repository, String> apiFamilyProvider =
     FutureProvider.autoDispose
@@ -21,6 +30,8 @@ class MainPageVM {
 
   String get searchWord => _ref.watch(searchWordProvider);
 
+  Item get selectedRepository => _ref.watch(selectedRepositoryProvider);
+
   void setRef(WidgetRef ref) {
     _ref = ref;
   }
@@ -28,8 +39,13 @@ class MainPageVM {
   AsyncValue<Repository> repositoryWithFamily(String searchWord) =>
       _ref.watch(apiFamilyProvider(searchWord));
 
-  //検索ボタンを押下した時、searchWordを更新
+  //検索ボタンを押下した時、searchWordProviderを更新
   void onPressedSearchButton(String searchWord) {
     _ref.read(searchWordProvider.notifier).update((state) => searchWord);
+  }
+
+  //リポジトリを押下した時、selectedRepositoryProviderを更新
+  void onRepositoyTapped(Item item) {
+    _ref.read(selectedRepositoryProvider.notifier).update((state) => item);
   }
 }
