@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:yumemi_codecheck/data/repository.dart';
 import 'package:http/http.dart' as http;
 
 class Logic {
   Future<Repository> getRepository(String searchText) async {
-    final apiUrl = 'https://api.github.com/search/repositories?q=$searchText';
+    final apiUrl =
+        'https://api.github.com/search/repositories?q=$searchText&per_page=100';
     final apiUri = Uri.parse(apiUrl);
     http.Response response = await http.get(apiUri);
 

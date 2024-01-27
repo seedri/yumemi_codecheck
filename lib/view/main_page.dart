@@ -52,21 +52,30 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ),
             Expanded(
               child: _vm.repositoryWithFamily(_vm.searchWord).when(
-                    data: (data) => ListView.builder(
-                      itemCount: data.items.length,
-                      itemBuilder: (context, index) => ListTile(
-                          title: GestureDetector(
-                              child: Text('リポジトリ名：${data.items[index].name}'),
-                              onTap: () {
-                                _vm.onRepositoyTapped(data.items[index]);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailPage(),
-                                  ),
-                                );
-                              })),
-                    ),
+                    data: (repository) {
+                      //表示用のListに検索で得られたItemを追加
+                      _vm.addRepositoryItemsList(repository);
+                      return Scrollbar(
+                        child: ListView.builder(
+                          itemCount: ref.watch(repositoryItemsProvider).length,
+                          itemBuilder: (context, index) => ListTile(
+                              title: GestureDetector(
+                                  child: Text(
+                                      'リポジトリ名：${ref.read(repositoryItemsProvider)[index].name}'),
+                                  onTap: () {
+                                    debugPrint(index.toString());
+                                    _vm.onRepositoyTapped(ref
+                                        .read(repositoryItemsProvider)[index]);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(),
+                                      ),
+                                    );
+                                  })),
+                        ),
+                      );
+                    },
                     error: (error, stack) => Text(error.toString()),
                     loading: () => AspectRatio(
                       aspectRatio: 1,
