@@ -7,12 +7,14 @@ class DetailPage extends ConsumerWidget {
   final MainPageVM _vm = MainPageVM();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _vm.setRef(ref);
+
     //今回表示するリポジトリのデータ
     Item dataItem = _vm.selectedRepository;
-    _vm.setRef(ref);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Repository Detail"),
+        title: const Text("リポジトリ詳細"),
       ),
       body: Center(
           child: SizedBox(
@@ -21,19 +23,29 @@ class DetailPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ClipOval(
-              child: Image.network(
-                dataItem.owner.avatar_url,
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: Image.network(
+                  dataItem.owner.avatar_url,
+                ),
               ),
             ),
             Text("リポジトリ名:${dataItem.name}"),
             Text("プロジェクト言語：${dataItem.language ?? "No Language"}"),
-            Text("Star数${dataItem.stargazers_count}"),
+            Text("Star数：${dataItem.stargazers_count}"),
             Text("Watcher数：${dataItem.watchers_count}"),
             Text("Fork数：${dataItem.forks_count}"),
             Text("Issue数：${dataItem.open_issues_count}"),
           ],
         ),
       )),
+      bottomNavigationBar: ElevatedButton(
+        child: Text('閉じる'),
+        onPressed: () {
+          return Navigator.pop(context);
+        },
+      ),
     );
   }
 }

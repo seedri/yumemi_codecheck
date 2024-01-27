@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yumemi_codecheck/view/detail_page.dart';
 import 'package:yumemi_codecheck/view_model/main_page_vm.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
@@ -54,11 +55,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     data: (data) => ListView.builder(
                       itemCount: data.items.length,
                       itemBuilder: (context, index) => ListTile(
-                        title: GestureDetector(
-                          child: Text('リポジトリ名：${data.items[index].name}'),
-                          onTap: () {},
-                        ),
-                      ),
+                          title: GestureDetector(
+                              child: Text('リポジトリ名：${data.items[index].name}'),
+                              onTap: () {
+                                _vm.onRepositoyTapped(data.items[index]);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailPage(),
+                                  ),
+                                );
+                              })),
                     ),
                     error: (error, stack) => Text(error.toString()),
                     loading: () => AspectRatio(
