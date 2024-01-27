@@ -57,15 +57,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       _vm.addRepositoryItemsList(repository);
                       return Scrollbar(
                         child: ListView.builder(
-                          itemCount: ref.watch(repositoryItemsProvider).length,
+                          itemCount: ref.watch(showItemsProvider).length,
                           itemBuilder: (context, index) => ListTile(
                               title: GestureDetector(
                                   child: Text(
-                                      'リポジトリ名：${ref.read(repositoryItemsProvider)[index].name}'),
+                                      'リポジトリ名：${ref.read(showItemsProvider)[index].name}'),
                                   onTap: () {
                                     debugPrint(index.toString());
-                                    _vm.onRepositoyTapped(ref
-                                        .read(repositoryItemsProvider)[index]);
+                                    _vm.onRepositoyTapped(
+                                        ref.read(showItemsProvider)[index]);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

@@ -3,7 +3,8 @@ import 'package:yumemi_codecheck/data/repository.dart';
 import 'package:yumemi_codecheck/model/logic.dart';
 
 final searchWordProvider = StateProvider<String>((ref) => '');
-final repositoryItemsProvider = StateProvider<List<Item>>((ref) => []);
+//画面表示するItemのProvider
+final showItemsProvider = StateProvider<List<Item>>((ref) => []);
 final selectedRepositoryProvider = StateProvider<Item>((ref) => Item(
     id: 0,
     name: "",
@@ -51,6 +52,6 @@ class MainPageVM {
 
   //repositoryItemsProviderに、取得したItemを追加
   void addRepositoryItemsList(Repository repository) {
-    _ref.watch(repositoryItemsProvider).addAll(repository.items);
+    _ref.watch(showItemsProvider).addAll(repository.items);
   }
 }
