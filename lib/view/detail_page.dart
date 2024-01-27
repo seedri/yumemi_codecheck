@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yumemi_codecheck/data/repository.dart';
@@ -26,8 +27,8 @@ class DetailPage extends ConsumerWidget {
               child: SizedBox(
                 width: 100,
                 height: 100,
-                child: Image.network(
-                  dataItem.owner.avatar_url,
+                child: CachedNetworkImage(
+                  imageUrl: dataItem.owner.avatar_url,
                 ),
               ),
             ),
