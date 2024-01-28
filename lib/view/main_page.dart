@@ -15,11 +15,12 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   String text = '';
   MainPageVM _vm = MainPageVM();
+  late ScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
-
+    scrollController = ScrollController();
     _vm.setRef(ref);
   }
 
@@ -57,8 +58,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     data: (repository) {
                       //表示用のListに検索で得られたItemを追加
                       _vm.addRepositoryItemsList(repository);
+                      scrollController.addListener(() {
+                        if (scrollController.position.pixels >=
+                            scrollController.position.maxScrollExtent * 1) {
+                          ref
+                              .read(pageProvider.notifier)
+                              .update((state) => state + 1);
+                        }
+                      });
                       return Scrollbar(
+                        controller: scrollController,
                         child: ListView.builder(
+                          controller: scrollController,
                           itemCount: ref.watch(showItemsProvider).length + 1,
                           itemBuilder: (context, index) {
                             if (index < ref.watch(showItemsProvider).length) {
