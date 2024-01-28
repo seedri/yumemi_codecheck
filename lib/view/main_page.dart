@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yumemi_codecheck/data/repository.dart';
@@ -17,11 +18,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   String text = '';
   MainPageVM _vm = MainPageVM();
   late ScrollController scrollController;
+  late bool isLoading;
 
   @override
   void initState() {
     super.initState();
     scrollController = ScrollController();
+    isLoading = false;
     _vm.setRef(ref);
   }
 
@@ -55,63 +58,77 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   error: (error, stack) => Text(error.toString()),
                 ),
             Expanded(
-              child: _vm.repositoryWithFamily(_vm.searchWord).when(
-                    data: (repository) {
-                      //表示用のListに検索で得られたItemを追加
-                      _vm.addRepositoryItemsList(repository);
-                      scrollController.addListener(() {
-                        if (scrollController.position.pixels >=
-                            scrollController.position.maxScrollExtent * 0.98) {
-                          ref
-                              .read(pageProvider.notifier)
-                              .update((state) => state + 1);
-                          _vm.repositoryNextPageWithFamily(_vm.searchWord).when(
-                                data: (nextPageEepository) {
-                                  _vm.addRepositoryItemsList(
-                                      nextPageEepository);
-                                },
-                                error: (error, stack) => Text(error.toString()),
-                                loading: () => CircularProgressIndicator(),
-                              );
-                        }
-                      });
-                      return Scrollbar(
-                        controller: scrollController,
-                        child: ListView.builder(
+                child: _vm.repositoryWithFamily(_vm.searchWord).when(
+                      data: (repository) {
+                        //表示用のListに検索で得られたItemを追加
+                        _vm.addRepositoryItemsList(repository);
+                        scrollController.addListener(() async {
+                          if (scrollController.position.pixels >=
+                                  scrollController.position.maxScrollExtent *
+                                      0.98 &&
+                              ref.read(hasNextPageProvider) &
+                                  !ref.read(isLoadingProvider)) {
+                            ref
+                                .read(isLoadingProvider.notifier)
+                                .update((state) => true);
+                            ref
+                                .read(pageProvider.notifier)
+                                .update((state) => state + 1);
+                            await _vm
+                                .repositoryNextPageWithFamily(_vm.searchWord)
+                                .when(
+                                  data: (nextPageEepository) {
+                                    _vm.addRepositoryItemsList(
+                                        nextPageEepository);
+                                  },
+                                  error: (error, stack) {
+                                    isLoading = false;
+                                    Text(error.toString());
+                                  },
+                                  loading: () => CircularProgressIndicator(),
+                                );
+                          }
+                        });
+                        return Scrollbar(
                           controller: scrollController,
-                          itemCount: ref.watch(showItemsProvider).length + 1,
-                          itemBuilder: (context, index) {
-                            if (index < ref.watch(showItemsProvider).length) {
-                              return ListTile(
-                                  title: GestureDetector(
-                                      child: Text(
-                                          'リポジトリ名：${ref.read(showItemsProvider)[index].name}'),
-                                      onTap: () {
-                                        debugPrint(index.toString());
-                                        _vm.onRepositoyTapped(
-                                            ref.read(showItemsProvider)[index]);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => DetailPage(),
-                                          ),
-                                        );
-                                      }));
-                            } else if (index != 0 &&
-                                index == ref.watch(showItemsProvider).length) {
-                              return CircularProgressIndicator();
-                            }
-                          },
-                        ),
-                      );
-                    },
-                    error: (error, stack) => Text(error.toString()),
-                    loading: () => AspectRatio(
-                      aspectRatio: 1,
-                      child: const CircularProgressIndicator(),
-                    ),
-                  ),
-            ),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            itemCount: ref.watch(showItemsProvider).length + 1,
+                            itemBuilder: (context, index) {
+                              if (index < ref.watch(showItemsProvider).length) {
+                                return ListTile(
+                                    title: GestureDetector(
+                                        child: Text(
+                                            'リポジトリ名：${ref.read(showItemsProvider)[index].name}'),
+                                        onTap: () {
+                                          debugPrint(index.toString());
+                                          _vm.onRepositoyTapped(ref
+                                              .read(showItemsProvider)[index]);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailPage(),
+                                            ),
+                                          );
+                                        }));
+                              } else if (index != 0 &&
+                                  index ==
+                                      ref.watch(showItemsProvider).length &&
+                                  ref.watch(hasNextPageProvider)) {
+                                return const CupertinoActivityIndicator(
+                                  radius: 20,
+                                );
+                              }
+                            },
+                          ),
+                        );
+                      },
+                      error: (error, stack) => Text(error.toString()),
+                      loading: () => const CupertinoActivityIndicator(
+                        radius: 50,
+                      ),
+                    )),
           ],
         ),
       ),

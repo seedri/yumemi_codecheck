@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:yumemi_codecheck/data/repository.dart';
 import 'package:http/http.dart' as http;
