@@ -83,8 +83,13 @@ class MainPageVM {
 
   //検索ボタンを押下した時、searchWordProviderを更新
   void onPressedSearchButton(String searchWord) {
-    //現在表示している配列の初期化
+    //現在表示している配列の初期化およびページ条件のリセット
     _ref.read(showItemsProvider).clear();
+    _ref.read(hasNextPageProvider.notifier).update((state) => false);
+    _ref.read(pageProvider.notifier).update((state) => 1);
+    _ref.read(isLoadingProvider.notifier).update((state) => false);
+
+    //検索ワードの更新、トリガー
     _ref.read(searchWordProvider.notifier).update((state) => searchWord);
   }
 
@@ -101,6 +106,4 @@ class MainPageVM {
       _ref.read(isLoadingProvider.notifier).update((state) => false);
     });
   }
-
-  //searchWordを変更して検索ボタンを押したとき、諸々リセットする
 }
