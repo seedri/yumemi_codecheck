@@ -15,9 +15,11 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   String text = '';
   MainPageVM _vm = MainPageVM();
+
   @override
   void initState() {
     super.initState();
+
     _vm.setRef(ref);
   }
 
@@ -57,28 +59,41 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       _vm.addRepositoryItemsList(repository);
                       return Scrollbar(
                         child: ListView.builder(
-                          itemCount: ref.watch(showItemsProvider).length,
-                          itemBuilder: (context, index) => ListTile(
-                              title: GestureDetector(
-                                  child: Text(
-                                      'リポジトリ名：${ref.read(showItemsProvider)[index].name}'),
-                                  onTap: () {
-                                    debugPrint(index.toString());
-                                    _vm.onRepositoyTapped(
-                                        ref.read(showItemsProvider)[index]);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailPage(),
-                                      ),
-                                    );
-                                  })),
+                          itemCount: ref.watch(showItemsProvider).length + 1,
+                          itemBuilder: (context, index) {
+                            if (index < ref.watch(showItemsProvider).length) {
+                              return ListTile(
+                                  title: GestureDetector(
+                                      child: Text(
+                                          'リポジトリ名：${ref.read(showItemsProvider)[index].name}'),
+                                      onTap: () {
+                                        debugPrint(index.toString());
+                                        _vm.onRepositoyTapped(
+                                            ref.read(showItemsProvider)[index]);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => DetailPage(),
+                                          ),
+                                        );
+                                      }));
+                            } else {
+                              //次ページのデータ表示用のボタン
+                              return ElevatedButton(
+                                  onPressed: () async {
+                                    ref
+                                        .read(pageProvider.notifier)
+                                        .update((state) => state + 1);
+                                  },
+                                  child: const Text('さらにデータを表示'));
+                            }
+                          },
                         ),
                       );
                     },
                     error: (error, stack) => Text(error.toString()),
                     loading: () => AspectRatio(
-                      aspectRatio: 1,
+                      aspectRatio: 0.3,
                       child: const CircularProgressIndicator(),
                     ),
                   ),
