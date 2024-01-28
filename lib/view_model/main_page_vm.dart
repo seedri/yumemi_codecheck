@@ -22,13 +22,22 @@ AutoDisposeFutureProviderFamily<Repository, String> apiFamilyProvider =
         .family<Repository, String>((ref, searchWord) async {
   Logic logic = Logic();
 
-  debugPrint('再構成');
+  if (searchWord == '') {
+    return Repository.empty;
+  }
+  return await logic.getRepository(searchWord);
+});
+
+AutoDisposeFutureProviderFamily<Repository, String> nextPageapiFamilyProvider =
+    FutureProvider.autoDispose
+        .family<Repository, String>((ref, searchWord) async {
+  Logic logic = Logic();
 
   if (searchWord == '') {
     return Repository.empty;
   }
   int page = ref.watch(pageProvider);
-  return await logic.getRepository(searchWord, page);
+  return await logic.loadNextPage(searchWord, page);
 });
 
 class MainPageVM {
@@ -44,6 +53,9 @@ class MainPageVM {
 
   AsyncValue<Repository> repositoryWithFamily(String searchWord) =>
       _ref.watch(apiFamilyProvider(searchWord));
+
+  AsyncValue<Repository> repositoryNextPageWithFamily(String searchWord) =>
+      _ref.watch(nextPageapiFamilyProvider(searchWord));
 
   //検索ボタンを押下した時、searchWordProviderを更新
   void onPressedSearchButton(String searchWord) {

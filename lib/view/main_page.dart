@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yumemi_codecheck/data/repository.dart';
 import 'package:yumemi_codecheck/view/detail_page.dart';
 import 'package:yumemi_codecheck/view_model/main_page_vm.dart';
 
@@ -60,10 +61,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       _vm.addRepositoryItemsList(repository);
                       scrollController.addListener(() {
                         if (scrollController.position.pixels >=
-                            scrollController.position.maxScrollExtent * 1) {
+                            scrollController.position.maxScrollExtent * 0.98) {
                           ref
                               .read(pageProvider.notifier)
                               .update((state) => state + 1);
+                          _vm.repositoryNextPageWithFamily(_vm.searchWord).when(
+                                data: (nextPageEepository) {
+                                  _vm.addRepositoryItemsList(
+                                      nextPageEepository);
+                                },
+                                error: (error, stack) => Text(error.toString()),
+                                loading: () => CircularProgressIndicator(),
+                              );
                         }
                       });
                       return Scrollbar(
@@ -88,15 +97,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                           ),
                                         );
                                       }));
-                            } else {
-                              //次ページのデータ表示用のボタン
-                              return ElevatedButton(
-                                  onPressed: () async {
-                                    ref
-                                        .read(pageProvider.notifier)
-                                        .update((state) => state + 1);
-                                  },
-                                  child: const Text('さらにデータを表示'));
+                            } else if (index != 0 &&
+                                index == ref.watch(showItemsProvider).length) {
+                              return CircularProgressIndicator();
                             }
                           },
                         ),
@@ -104,7 +107,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     },
                     error: (error, stack) => Text(error.toString()),
                     loading: () => AspectRatio(
-                      aspectRatio: 0.3,
+                      aspectRatio: 1,
                       child: const CircularProgressIndicator(),
                     ),
                   ),
@@ -112,6 +115,28 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  // 変更点: ListView.builderの部分を外部のメソッドに切り出し
+  Widget _buildListViewWidget(List<Item> items) {
+    return ListView.builder(
+      controller: scrollController,
+      itemCount: items.length + 1,
+      itemBuilder: (context, index) {
+        if (index < items.length) {
+          return ListTile(
+              // ... (変更なし)
+              );
+        } else {
+          return ElevatedButton(
+            onPressed: () async {
+              ref.read(pageProvider.notifier).update((state) => state + 1);
+            },
+            child: const Text('さらに読み込む'),
+          );
+        }
+      },
     );
   }
 }
