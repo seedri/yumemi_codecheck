@@ -15,12 +15,11 @@ class Logic {
     }
 
     var jsonData = json.decode(response.body);
-    debugPrint('data updated');
+
     return Repository.fromJson(jsonData);
   }
 
   Future<Repository> loadNextPage(String searchText, int page) async {
-    debugPrint('Loaded New Data');
     final apiUrl =
         'https://api.github.com/search/repositories?q=$searchText&per_page=100&page=$page';
     final apiUri = Uri.parse(apiUrl);

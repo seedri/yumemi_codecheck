@@ -30,15 +30,14 @@ AutoDisposeFutureProviderFamily<Repository, String> apiFamilyProvider =
   return await logic.getRepository(searchWord);
 });
 
-AutoDisposeFutureProviderFamily<Repository, String> nextPageapiFamilyProvider =
-    FutureProvider.autoDispose
-        .family<Repository, String>((ref, searchWord) async {
+AutoDisposeFutureProviderFamily<Repository, int> nextPageapiFamilyProvider =
+    FutureProvider.autoDispose.family<Repository, int>((ref, page) async {
   Logic logic = Logic();
-
+  String searchWord = ref.read(searchWordProvider);
   if (searchWord == '') {
     return Repository.empty;
   }
-  int page = ref.watch(pageProvider);
+
   //これから読み込むページが最終か否か
   late bool isFinalPage;
   ref.watch(apiFamilyProvider(searchWord)).whenData((repository) {
@@ -52,6 +51,8 @@ class MainPageVM {
   late WidgetRef _ref;
 
   String get searchWord => _ref.watch(searchWordProvider);
+
+  int get page => _ref.watch(pageProvider);
 
   Item get selectedRepository => _ref.watch(selectedRepositoryProvider);
 
@@ -78,8 +79,8 @@ class MainPageVM {
     return repositoryAsync;
   }
 
-  AsyncValue<Repository> repositoryNextPageWithFamily(String searchWord) =>
-      _ref.watch(nextPageapiFamilyProvider(searchWord));
+  AsyncValue<Repository> repositoryNextPageWithFamily(int page) =>
+      _ref.watch(nextPageapiFamilyProvider(page));
 
   //検索ボタンを押下した時、searchWordProviderを更新
   void onPressedSearchButton(String searchWord) {

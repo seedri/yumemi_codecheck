@@ -75,11 +75,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                 .read(pageProvider.notifier)
                                 .update((state) => state + 1);
                             await _vm
-                                .repositoryNextPageWithFamily(_vm.searchWord)
+                                .repositoryNextPageWithFamily(_vm.page)
                                 .when(
-                                  data: (nextPageEepository) {
+                                  data: (nextPageRepository) {
+                                    debugPrint(
+                                        'Next Page Data Received: ${nextPageRepository.toString()}');
                                     _vm.addRepositoryItemsList(
-                                        nextPageEepository);
+                                        nextPageRepository);
                                   },
                                   error: (error, stack) {
                                     isLoading = false;
