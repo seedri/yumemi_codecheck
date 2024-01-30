@@ -16,7 +16,6 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  String text = '';
   MainPageVM _vm = MainPageVM();
   ThemeVM _themeVM = ThemeVM();
   static const String _sharedPreferencesKey = 'isDark';
@@ -85,14 +84,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(onChanged: (_text) {
-              text = _text;
-            }),
-            ElevatedButton(
-                onPressed: () {
-                  _vm.onPressedSearchButton(text);
-                },
-                child: Text('検索')),
+            SizedBox(
+              height: 10,
+            ),
+            TextField(
+                maxLength: 256,
+                textInputAction: TextInputAction.search,
+                onSubmitted: (_text) => _vm.onPressedSearchButton(_text),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'キーワード',
+                  labelText: 'リポジトリ名',
+                  suffixIcon: Icon(Icons.sort),
+                )),
             _vm.repositoryWithFamily(_vm.searchWord).when(
                   data: (data) {
                     if (data.total_count == 0) return Text('検索結果なし');
