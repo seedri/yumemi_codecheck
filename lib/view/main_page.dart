@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yumemi_codecheck/view/detail_page.dart';
 import 'package:yumemi_codecheck/view_model/main_page_vm.dart';
+import 'package:yumemi_codecheck/view_model/theme_vm.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.isDarkMode});
 
   final String title;
+  final bool isDarkMode;
 
   @override
   ConsumerState<MyHomePage> createState() => _MyHomePageState();
@@ -16,6 +18,8 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   String text = '';
   MainPageVM _vm = MainPageVM();
+  ThemeVM _themeVM = ThemeVM();
+  static const String _sharedPreferencesKey = 'isDark';
   late ScrollController scrollController;
   late bool isLoading;
 
@@ -31,8 +35,51 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: widget.isDarkMode ? Colors.blueGrey : Colors.blue,
+        title: Text(
+          widget.title,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.125,
+              child: DrawerHeader(
+                padding: EdgeInsets.zero,
+                child: const Text(
+                  '設定',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                decoration: BoxDecoration(
+                    color: widget.isDarkMode ? Colors.blueGrey : Colors.blue),
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(width: 0.5),
+                ),
+              ),
+              child: ListTile(
+                title: Text(widget.isDarkMode ? "ライトモードにする" : "ダークモードにする"),
+                onTap: () {
+                  final _isDarkMode = ref.watch(isDarkModeProvider) ?? false;
+                  ref
+                      .read(isDarkModeProvider.notifier)
+                      .update((state) => !_isDarkMode);
+                  _themeVM.onThemeChaged(_sharedPreferencesKey, !_isDarkMode);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
