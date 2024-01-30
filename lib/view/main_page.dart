@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yumemi_codecheck/data/repository.dart';
 import 'package:yumemi_codecheck/view/detail_page.dart';
 import 'package:yumemi_codecheck/view_model/main_page_vm.dart';
 
@@ -134,28 +133,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           ],
         ),
       ),
-    );
-  }
-
-  // 変更点: ListView.builderの部分を外部のメソッドに切り出し
-  Widget _buildListViewWidget(List<Item> items) {
-    return ListView.builder(
-      controller: scrollController,
-      itemCount: items.length + 1,
-      itemBuilder: (context, index) {
-        if (index < items.length) {
-          return ListTile(
-              // ... (変更なし)
-              );
-        } else {
-          return ElevatedButton(
-            onPressed: () async {
-              ref.read(pageProvider.notifier).update((state) => state + 1);
-            },
-            child: const Text('さらに読み込む'),
-          );
-        }
-      },
     );
   }
 }
