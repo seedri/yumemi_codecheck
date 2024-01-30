@@ -128,8 +128,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                 .repositoryNextPageWithFamily(_vm.page)
                                 .when(
                                   data: (nextPageRepository) {
-                                    debugPrint(
-                                        'Next Page Data Received: ${nextPageRepository.toString()}');
                                     _vm.addRepositoryItemsList(
                                         nextPageRepository);
                                   },
@@ -163,7 +161,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                               .name,
                                           overflow: TextOverflow.ellipsis,
                                         ),
-                                        tileColor: Colors.white,
+                                        tileColor: widget.isDarkMode
+                                            ? Colors.black12
+                                            : Colors.white,
                                       ),
                                       elevation: 3,
                                       margin: EdgeInsets.all(3),
