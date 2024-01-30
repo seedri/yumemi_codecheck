@@ -16,10 +16,6 @@ void main() {
       );
       final container = ProviderContainer();
 
-      // モックの動作を設定
-      // when(mockLogic.getRepository(''))
-      //     .thenAnswer((_) async => Repository.empty);
-
       // Act
       final result = await container.read(apiFamilyProvider(''));
 
