@@ -97,22 +97,43 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                             itemCount: ref.watch(showItemsProvider).length + 1,
                             itemBuilder: (context, index) {
                               if (index < ref.watch(showItemsProvider).length) {
-                                return ListTile(
-                                    title: GestureDetector(
-                                        child: Text(
-                                            'リポジトリ名：${ref.read(showItemsProvider)[index].name}'),
-                                        onTap: () {
-                                          debugPrint(index.toString());
-                                          _vm.onRepositoyTapped(ref
-                                              .read(showItemsProvider)[index]);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailPage(),
-                                            ),
-                                          );
-                                        }));
+                                return GestureDetector(
+                                    child: Card(
+                                      child: ListTile(
+                                        leading: Image.network(
+                                          ref
+                                              .read(showItemsProvider)[index]
+                                              .owner
+                                              .avatar_url,
+                                        ),
+                                        title: Text(
+                                          ref
+                                              .read(showItemsProvider)[index]
+                                              .name,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        tileColor: Colors.white,
+                                      ),
+                                      elevation: 3,
+                                      margin: EdgeInsets.all(3),
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: BorderSide(
+                                            color: Colors.blueGrey, width: 1.2),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      debugPrint(index.toString());
+                                      _vm.onRepositoyTapped(
+                                          ref.read(showItemsProvider)[index]);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DetailPage(),
+                                        ),
+                                      );
+                                    });
                               } else if (index != 0 &&
                                   index ==
                                       ref.watch(showItemsProvider).length &&

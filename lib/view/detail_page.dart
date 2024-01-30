@@ -25,19 +25,22 @@ class DetailPage extends ConsumerWidget {
           children: <Widget>[
             ClipOval(
               child: SizedBox(
-                width: 100,
-                height: 100,
+                width: 120,
+                height: 120,
                 child: CachedNetworkImage(
                   imageUrl: dataItem.owner.avatar_url,
                 ),
               ),
             ),
-            Text("リポジトリ名:${dataItem.name}"),
-            Text("プロジェクト言語：${dataItem.language ?? "No Language"}"),
-            Text("Star数：${dataItem.stargazers_count}"),
-            Text("Watcher数：${dataItem.watchers_count}"),
-            Text("Fork数：${dataItem.forks_count}"),
-            Text("Issue数：${dataItem.open_issues_count}"),
+            SizedBox(
+              height: 10,
+            ),
+            StyledText("リポジトリ名:${dataItem.name}"),
+            StyledText("プロジェクト言語：${dataItem.language ?? "No Language"}"),
+            StyledText("Star数:${dataItem.stargazers_count}"),
+            StyledText("Watcher数:${dataItem.watchers_count}"),
+            StyledText("Fork数:${dataItem.forks_count}"),
+            StyledText("Issue数:${dataItem.open_issues_count}"),
           ],
         ),
       )),
@@ -46,6 +49,23 @@ class DetailPage extends ConsumerWidget {
         onPressed: () {
           return Navigator.pop(context);
         },
+      ),
+    );
+  }
+}
+
+class StyledText extends StatelessWidget {
+  final String text;
+
+  const StyledText(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
