@@ -37,6 +37,21 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           widget.title,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          Consumer(
+            builder: (context, ref, child) {
+              return ref.read(showItemsProvider).isNotEmpty
+                  ? IconButton(
+                      onPressed: () {
+                        // 空文字で検索することで検索結果の削除
+                        _vm.onPressedSearchButton('');
+                      },
+                      icon: Icon(Icons.delete),
+                    )
+                  : SizedBox.shrink();
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
