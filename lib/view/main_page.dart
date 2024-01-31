@@ -20,13 +20,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   ThemeVM _themeVM = ThemeVM();
   static const String _sharedPreferencesKey = 'isDark';
   late ScrollController scrollController;
-  late bool isLoading;
 
   @override
   void initState() {
     super.initState();
     scrollController = ScrollController();
-    isLoading = false;
     _vm.setRef(ref);
   }
 
@@ -69,11 +67,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               child: ListTile(
                 title: Text(widget.isDarkMode ? "ライトモードにする" : "ダークモードにする"),
                 onTap: () {
-                  final _isDarkMode = ref.watch(isDarkModeProvider) ?? false;
-                  ref
-                      .read(isDarkModeProvider.notifier)
-                      .update((state) => !_isDarkMode);
-                  _themeVM.onThemeChaged(_sharedPreferencesKey, !_isDarkMode);
+                  _themeVM.onThemeChaged(_sharedPreferencesKey, ref);
                 },
               ),
             ),
@@ -116,8 +110,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           if (scrollController.position.pixels >=
                                   scrollController.position.maxScrollExtent *
                                       0.98 &&
-                              ref.read(hasNextPageProvider) &
-                                  !ref.read(isLoadingProvider)) {
+                              _vm.hasNextPage & !_vm.isLoading) {
                             ref
                                 .read(isLoadingProvider.notifier)
                                 .update((state) => true);
@@ -132,7 +125,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                         nextPageRepository);
                                   },
                                   error: (error, stack) {
-                                    isLoading = false;
+                                    ref
+                                        .read(isLoadingProvider.notifier)
+                                        .update((state) => false);
                                     Text(error.toString());
                                   },
                                   loading: () => CircularProgressIndicator(),
@@ -143,22 +138,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           controller: scrollController,
                           child: ListView.builder(
                             controller: scrollController,
-                            itemCount: ref.watch(showItemsProvider).length + 1,
+                            itemCount: _vm.showItemList.length + 1,
                             itemBuilder: (context, index) {
-                              if (index < ref.watch(showItemsProvider).length) {
+                              if (index < _vm.showItemList.length) {
                                 return GestureDetector(
                                     child: Card(
                                       child: ListTile(
                                         leading: Image.network(
-                                          ref
-                                              .read(showItemsProvider)[index]
-                                              .owner
+                                          _vm.showItemList[index].owner
                                               .avatar_url,
                                         ),
                                         title: Text(
-                                          ref
-                                              .read(showItemsProvider)[index]
-                                              .name,
+                                          _vm.showItemList[index].name,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         tileColor: widget.isDarkMode
@@ -177,7 +168,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                     onTap: () {
                                       debugPrint(index.toString());
                                       _vm.onRepositoyTapped(
-                                          ref.read(showItemsProvider)[index]);
+                                          _vm.showItemList[index]);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -186,9 +177,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                       );
                                     });
                               } else if (index != 0 &&
-                                  index ==
-                                      ref.watch(showItemsProvider).length &&
-                                  ref.watch(hasNextPageProvider)) {
+                                  index == _vm.showItemList.length &&
+                                  _vm.hasNextPage) {
                                 return const CupertinoActivityIndicator(
                                   radius: 20,
                                 );
