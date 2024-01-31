@@ -56,6 +56,12 @@ class MainPageVM {
 
   Item get selectedRepository => _ref.watch(selectedRepositoryProvider);
 
+  List<Item> get showItemList => _ref.read(showItemsProvider);
+
+  bool get isLoading => _ref.read(isLoadingProvider);
+
+  bool get hasNextPage => _ref.read(hasNextPageProvider);
+
   void setRef(WidgetRef ref) {
     _ref = ref;
   }
