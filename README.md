@@ -23,4 +23,7 @@
 # Usage
  
 flutter pub run で実行
- 
+
+# Others
+- Repository.fromJsonに関するテストを実装
+- 検索結果のソート機能は時間の都合により完遂できませんでした
