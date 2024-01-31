@@ -181,7 +181,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                       ),
                                     ),
                                     onTap: () {
-                                      debugPrint(index.toString());
                                       _vm.onRepositoyTapped(
                                           _vm.showItemList[index]);
                                       Navigator.push(

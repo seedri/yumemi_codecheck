@@ -12,7 +12,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _isDarkMode = ref.watch(isDarkModeProvider) ?? false;
+    final _isDarkMode = ref.watch(isDarkModeProvider);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: _isDarkMode
