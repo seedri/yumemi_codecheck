@@ -95,7 +95,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   border: OutlineInputBorder(),
                   hintText: 'キーワード',
                   labelText: 'リポジトリ名',
-                  suffixIcon: Icon(Icons.sort),
+                  suffixIcon: Icon(Icons.search),
                 )),
             _vm.repositoryWithFamily(_vm.searchWord).when(
                   data: (data) {
@@ -193,6 +193,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                   radius: 20,
                                 );
                               }
+                              return null;
                             },
                           ),
                         );

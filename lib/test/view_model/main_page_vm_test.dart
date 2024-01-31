@@ -6,6 +6,7 @@ import 'package:yumemi_codecheck/model/logic.dart';
 
 class MockLogic extends Mock implements Logic {}
 
+//下記のテストはエラーが出て通りませんでした
 void main() {
   group('apiFamilyProvider', () {
     test('successful call returns Repository', () async {
